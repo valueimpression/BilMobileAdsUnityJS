@@ -13,7 +13,7 @@ public class BilUnityJS : MonoBehaviour
     // const string INTERSTITIAL_AD = "InterstitialAd";
 
     #region BannerAd
-    //private bool _isBannerLoaded = false;
+    private bool _isBannerLoaded = false;
     public static Action<BannerData> OnBannerImpression;
     public static Action<BannerData> OnBannerFailure;
     #endregion
