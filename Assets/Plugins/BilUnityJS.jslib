@@ -4,12 +4,12 @@ mergeInto(LibraryManager.library, {
 	},
 
 	PreLoadRewardedAd: function (rewardedType) {
-		if (
-			typeof window.BilUnityJS == "undefined" &&
-			typeof window.BilUnityJS.PreLoadRewardedAd == "undefined"
-		) return;
-
 		try {
+			if (
+				typeof window.BilUnityJS == "undefined" ||
+				typeof window.BilUnityJS.PreLoadRewardedAd == "undefined"
+			) return;
+
 			const type = UTF8ToString(rewardedType);
 			window.BilUnityJS.PreLoadRewardedAd(type).then(function (response) {
 				SendMessage("BilUnityJS", "RewardedAdCallback", JSON.stringify(response));
@@ -21,12 +21,12 @@ mergeInto(LibraryManager.library, {
 		}
 	},
 	ShowRewardedAd: function (rewardedType) {
-		if (
-			typeof window.BilUnityJS == "undefined" &&
-			typeof window.BilUnityJS.ShowRewardedAd == "undefined"
-		) return;
-
 		try {
+			if (
+				typeof window.BilUnityJS == "undefined" ||
+				typeof window.BilUnityJS.ShowRewardedAd == "undefined"
+			) return;
+
 			const type = UTF8ToString(rewardedType);
 			window.BilUnityJS.ShowRewardedAd(type).then(function (response) {
 				SendMessage("BilUnityJS", "RewardedAdCallback", JSON.stringify(response));
@@ -38,12 +38,12 @@ mergeInto(LibraryManager.library, {
 		}
 	},
 	IsRewardedAdReady: function (rewardedType) {
-		if (
-			typeof window.BilUnityJS == "undefined" &&
-			typeof window.BilUnityJS.IsRewardedAdReady == "undefined"
-		) return;
-
 		try {
+			if (
+				typeof window.BilUnityJS == "undefined" ||
+				typeof window.BilUnityJS.IsRewardedAdReady == "undefined"
+			) return;
+
 			const type = UTF8ToString(rewardedType);
 			window.BilUnityJS.IsRewardedAdReady(type).then(function (response) {
 				SendMessage("BilUnityJS", "RewardedAdCallback", JSON.stringify(response));
@@ -56,43 +56,55 @@ mergeInto(LibraryManager.library, {
 	},
 
 	PreLoadInterstitialAd: function () {
-		if (
-			typeof window.BilUnityJS == "undefined" &&
-			typeof window.BilUnityJS.PreLoadInterstitialAd == "undefined"
-		) return;
+		try {
+			if (
+				typeof window.BilUnityJS == "undefined" ||
+				typeof window.BilUnityJS.PreLoadInterstitialAd == "undefined"
+			) return;
 
-		window.BilUnityJS.PreLoadInterstitialAd().then(function (response) {
-			SendMessage("BilUnityJS", "PreloadInterstitialCallback", 1);
-		}).catch(function (err) {
-			SendMessage("BilUnityJS", "PreloadInterstitialCallback", 0);
-		});
+			window.BilUnityJS.PreLoadInterstitialAd().then(function (response) {
+				SendMessage("BilUnityJS", "PreloadInterstitialCallback", 1);
+			}).catch(function (err) {
+				SendMessage("BilUnityJS", "PreloadInterstitialCallback", 0);
+			});
+		} catch (error) {
+			console.log("PreLoadInterstitialAd: " + error);
+		}
 	},
 	ShowInterstitialAd: function () {
-		if (
-			typeof window.BilUnityJS == "undefined" &&
-			typeof window.BilUnityJS.ShowInterstitialAd == "undefined"
-		) return;
+		try {
+			if (
+				typeof window.BilUnityJS == "undefined" ||
+				typeof window.BilUnityJS.ShowInterstitialAd == "undefined"
+			) return;
 
-		window.BilUnityJS.ShowInterstitialAd().then(function (response) {
-			SendMessage("BilUnityJS", "InterstitialAdCallback", JSON.stringify(response));
-		}).catch(function (err) {
-			SendMessage("BilUnityJS", "InterstitialAdCallback", JSON.stringify(err));
-		});
+			window.BilUnityJS.ShowInterstitialAd().then(function (response) {
+				SendMessage("BilUnityJS", "InterstitialAdCallback", JSON.stringify(response));
+			}).catch(function (err) {
+				SendMessage("BilUnityJS", "InterstitialAdCallback", JSON.stringify(err));
+			});
+		} catch (error) {
+			console.log("ShowInterstitialAd: " + error);
+		}
 	},
 
 	ShowBannerAd: function (elemID, adSize) {
-		if (
-			typeof window.BilUnityJS == "undefined" &&
-			typeof window.BilUnityJS.ShowAd == "undefined"
-		) return;
+		try {
+			if (
+				typeof window.BilUnityJS == "undefined" ||
+				typeof window.BilUnityJS.ShowAd == "undefined"
+			) return;
 
-		const elem = UTF8ToString(elemID);
-		const size = UTF8ToString(adSize);
-		window.BilUnityJS.ShowBanner(elem, size).then(function (response) {
-			SendMessage("BilUnityJS", "BannerAdCallback", JSON.stringify(response));
-		}).catch(function (err) {
-			SendMessage("BilUnityJS", "BannerAdCallback", JSON.stringify(response));
-		});
+			const elem = UTF8ToString(elemID);
+			const size = UTF8ToString(adSize);
+			window.BilUnityJS.ShowBanner(elem, size).then(function (response) {
+				SendMessage("BilUnityJS", "BannerAdCallback", JSON.stringify(response));
+			}).catch(function (err) {
+				SendMessage("BilUnityJS", "BannerAdCallback", JSON.stringify(response));
+			});
+		} catch (error) {
+			console.log("ShowBannerAd: " + error);
+		}
 	},
 
 	OnSendEvent: function (eventName) {
