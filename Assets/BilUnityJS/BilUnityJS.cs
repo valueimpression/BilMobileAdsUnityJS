@@ -30,9 +30,11 @@ public class BilUnityJS : MonoBehaviour
 
     #region InterstitialAd
     private bool _isInterstitialReady = false;
-    public static Action OnInterstitialImpression;
-    public static Action OnInterstitialFailure;
-    public static Action<int> OnInterstitialReady;
+    public static Action<InterstitialData> OnInterstitialImpression;
+    public static Action<InterstitialData> OnInterstitialReady;
+    public static Action<InterstitialData> OnInterstitialClosed;
+    public static Action<InterstitialData> OnInterstitialLoadFail;
+    public static Action<InterstitialData> OnInterstitialShowFail;
     #endregion
 
     [DllImport("__Internal")]
@@ -149,7 +151,7 @@ public class BilUnityJS : MonoBehaviour
     void RewardedAdCallback(string eventJSON)
     {
         EventData<RewardedData> eventData = JsonUtility.FromJson<EventData<RewardedData>>(eventJSON);
-        Debug.Log("RewardedAdCallback: " + eventData.eventName);
+        // Debug.Log("RewardedAdCallback: " + eventData.eventName);
         //Debug.Log(eventData.data.rewardedType + " | " + eventData.data.data);
 
         if (eventData.eventName == "PreloadRewarded")
@@ -216,6 +218,42 @@ public class BilUnityJS : MonoBehaviour
     {
         return _isInterstitialReady;
     }
+    void InterstitialAdCallback(string eventJSON)
+    {
+        EventData<InterstitialData> eventData = JsonUtility.FromJson<EventData<InterstitialData>>(eventJSON);
+        Debug.Log("InterstitialAdCallback: " + eventData.eventName);
+        //Debug.Log(eventData.data.rewardedType + " | " + eventData.data.data);
+
+        if (eventData.eventName == "PreloadInterstitial")
+        {
+            return;
+        }
+        if (eventData.eventName == "onShowInterstitialSuccess")
+        {
+            if (OnInterstitialImpression != null) OnInterstitialImpression(eventData.data);
+            return;
+        }
+        if (eventData.eventName == "onAdReady" || eventData.eventName == "IsInterstitialAdReady")
+        {
+            if (OnInterstitialReady != null) OnInterstitialReady(eventData.data);
+            return;
+        }
+        if (eventData.eventName == "onClose")
+        {
+            if (OnInterstitialClosed != null) OnInterstitialClosed(eventData.data);
+            return;
+        }
+        if (eventData.eventName == "onLoadInterstitialFail")
+        {
+            if (OnInterstitialLoadFail != null) OnInterstitialLoadFail(eventData.data);
+            return;
+        }
+        if (eventData.eventName == "onShowInterstitialFail")
+        {
+            if (OnInterstitialShowFail != null) OnInterstitialShowFail(eventData.data);
+            return;
+        }
+    }
     void PreloadInterstitialCallback(int loaded)
     {
         _isInterstitialReady = (loaded == 1);
@@ -262,7 +300,11 @@ public class RewardedData
     public string rewardedType;
     public string data;
 }
-
+[Serializable]
+public class InterstitialData
+{
+    public string data;
+}
 [Serializable]
 public class BannerData
 {
