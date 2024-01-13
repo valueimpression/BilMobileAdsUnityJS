@@ -100,7 +100,7 @@ mergeInto(LibraryManager.library, {
 			window.BilUnityJS.ShowBanner(elem, size).then(function (response) {
 				SendMessage("BilUnityJS", "BannerAdCallback", JSON.stringify(response));
 			}).catch(function (err) {
-				SendMessage("BilUnityJS", "BannerAdCallback", JSON.stringify(response));
+				SendMessage("BilUnityJS", "BannerAdCallback", JSON.stringify(err));
 			});
 		} catch (error) {
 			console.log("ShowBannerAd: " + error);
