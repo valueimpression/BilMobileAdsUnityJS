@@ -51,7 +51,7 @@ public class BilUnityJS : MonoBehaviour
     private static extern void DestroyBannerAd(string slotID);
 
     [DllImport("__Internal")]
-    private static extern void OnSendEvent(string options);
+    private static extern void OnSendEvent(string option);
 
     void Awake()
     {
@@ -252,31 +252,13 @@ public class BilUnityJS : MonoBehaviour
             return;
         }
     }
-    void PreloadInterstitialCallback(int loaded)
-    {
-        //_isInterstitialReady = (loaded == 1);
-
-        //if (OnInterstitialReady != null) OnInterstitialReady(loaded);
-    }
-    void InterstitialImpressionCallback()
-    {
-        //_isInterstitialReady = false;
-
-        //if (OnInterstitialImpression != null) OnInterstitialImpression();
-    }
-    void InterstitialFailureCallback()
-    {
-        //_isInterstitialReady = false;
-
-        //if (OnInterstitialLoadFail != null) OnInterstitialLoadFail();
-    }
     #endregion
 
-    internal void SendEvent(string options)
+    internal void SendEvent<T>(EventData<T> eventData)
     {
         try
         {
-            OnSendEvent(options);
+            OnSendEvent(JsonUtility.ToJson(eventData));
         }
         catch (EntryPointNotFoundException e)
         {
@@ -308,8 +290,6 @@ public class BannerData
     public string slotID;
     public string data;
 }
-
-
 
 public enum AdPosition
 {

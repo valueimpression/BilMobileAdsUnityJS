@@ -28,6 +28,15 @@ public class GameManager : MonoBehaviour
 
         BilUnityJS.OnInterstitialReady += OnInterstitialReady;
         BilUnityJS.OnInterstitialImpression += OnInterstitialImpression;
+
+        BannerData bannerData = new BannerData();
+        bannerData.slotID = "banner1";
+        EventData<BannerData> eventData = new EventData<BannerData>
+        {
+            eventName = "InitBanner",
+            data = bannerData
+        };
+        BilUnityJS.Instance.SendEvent(eventData);
     }
 
     #region BannerAD

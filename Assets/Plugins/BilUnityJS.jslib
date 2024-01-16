@@ -63,9 +63,9 @@ mergeInto(LibraryManager.library, {
 			) return;
 
 			window.BilUnityJS.PreLoadInterstitialAd().then(function (response) {
-				SendMessage("BilUnityJS", "PreloadInterstitialCallback", 1);
+				SendMessage("BilUnityJS", "InterstitialAdCallback", JSON.stringify(response));
 			}).catch(function (err) {
-				SendMessage("BilUnityJS", "PreloadInterstitialCallback", 0);
+				SendMessage("BilUnityJS", "InterstitialAdCallback", JSON.stringify(err));
 			});
 		} catch (error) {
 			console.log("PreLoadInterstitialAd: " + error);
@@ -125,13 +125,21 @@ mergeInto(LibraryManager.library, {
 		}
 	},
 
-	OnSendEvent: function (eventName) {
-		if (
-			typeof BilUnityJS == "undefined" &&
-			typeof BilUnityJS.OnSendEvent == "undefined"
-		) return;
+	OnSendEvent: function (eventData) {
+		try {
+			if (
+				typeof window.BilUnityJS == "undefined" ||
+				typeof window.BilUnityJS.OnSendEvent == "undefined"
+			) return;
 
-		const event = UTF8ToString(eventName);
-		BilUnityJS.OnSendEvent(event);
+			const eventN = UTF8ToString(eventData);
+			window.BilUnityJS.OnSendEvent(eventN).then(function (response) {
+				SendMessage("BilUnityJS", "BannerAdCallback", JSON.stringify(response));
+			}).catch(function (err) {
+				SendMessage("BilUnityJS", "BannerAdCallback", JSON.stringify(err));
+			});
+		} catch (error) {
+			console.log("OnSendEvent: " + error);
+		}
 	}
 });
