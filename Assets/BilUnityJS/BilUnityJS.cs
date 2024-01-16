@@ -322,8 +322,7 @@ public enum BannerSize
     LARGE_BANNER,
     MEDIUM_RECTANGLE,
     FULL_BANNER,
-    LEADERBOARD,
-    SMART_BANNER
+    LEADERBOARD
 }
 [Serializable]
 public class AdSize
@@ -360,7 +359,7 @@ public class BannerAd
     {
         this.slotID = slotID;
         SetAdSize(adSize);
-        position = x + "-" + y;
+        position = x + "_" + y;
     }
 
     public BannerAd(string slotID, AdSize adSize, AdPosition position)
@@ -375,7 +374,7 @@ public class BannerAd
     {
         this.slotID = slotID;
         this.adSize = adSize.GetSize();
-        position = x + "-" + y;
+        position = x + "_" + y;
     }
 
     private void SetAdSize(BannerSize adSize)
@@ -399,10 +398,6 @@ public class BannerAd
         else if (adSize == BannerSize.LEADERBOARD)
         {
             this.adSize = "728x90";
-        }
-        else if (adSize == BannerSize.SMART_BANNER)
-        {
-            this.adSize = "1x1";
         }
     }
 
