@@ -8,9 +8,17 @@ public class GameManager : MonoBehaviour
 {
 
     public Text textToShow;
+    BannerAd banner;
 
     void Awake()
     {
+
+        banner = new BannerAd("banner_top", BannerSize.BANNER, AdPosition.BOTTOM);
+        //AdSize size = new AdSize(300, 250);
+        //banner = new BannerAd("banner_top", size, AdPosition.BOTTOM);
+        //banner = new BannerAd("banner_top", size, 0, 50);
+
+
         BilUnityJS.OnBannerImpression += OnBannerImpression;
         BilUnityJS.OnBannerFailure += OnBannerFailure;
 
@@ -20,26 +28,26 @@ public class GameManager : MonoBehaviour
 
         BilUnityJS.OnInterstitialReady += OnInterstitialReady;
         BilUnityJS.OnInterstitialImpression += OnInterstitialImpression;
-        BilUnityJS.OnInterstitialFailure += OnInterstitialFailure;
     }
-
 
     #region BannerAD
     public void ShowBannerAd()
     {
-        BilUnityJS.Instance.ShowBanner("ad_banner_container", "300x250");
+        if (banner != null) banner.ShowAd();
     }
-    public void ShowBannerAd2()
+    public void DestroyBannerAd()
     {
-        BilUnityJS.Instance.ShowBanner("ad_banner_container2", "728x90");
+        if (banner != null) banner.Destroy();
     }
-    private void OnBannerImpression(BannerData data)
+    private void OnBannerImpression(BannerData obj)
     {
-        Debug.Log("OnBannerImpression");
+        Debug.Log("OnBannerImpression: " + obj.slotID);
+        Debug.Log("Data: " + obj.data);
     }
-    private void OnBannerFailure(BannerData data)
+    private void OnBannerFailure(BannerData obj)
     {
-        Debug.Log("OnBannerFailure");
+        Debug.Log("OnBannerFailure: " + obj.slotID);
+        Debug.Log("Data: " + obj.data);
     }
     #endregion
 
@@ -92,7 +100,7 @@ public class GameManager : MonoBehaviour
     #region InterstitialAD
     public void IsInterstitialReady()
     {
-        Debug.Log("Interstitial Loaded: " + BilUnityJS.Instance.IsInterstitialReady());
+        Debug.Log("Interstitial Loaded: ");
     }
     public void PreloadInterstitialAd()
     {
@@ -103,16 +111,15 @@ public class GameManager : MonoBehaviour
         BilUnityJS.Instance.ShowInterstitial();
     }
 
-    private void OnInterstitialReady(int isLoaded)
+    private void OnInterstitialReady(InterstitialData obj)
     {
-        string str = isLoaded == 1 ? "IsReady" : "NotReady";
-        Debug.Log("OnInterstitialReady: " + str);
-        textToShow.text = "OnInterstitialReady: " + str;
+        Debug.Log("OnInterstitialReady: " + obj.data);
+        textToShow.text = "OnInterstitialReady: " + obj.data;
     }
-    private void OnInterstitialImpression()
+    private void OnInterstitialImpression(InterstitialData obj)
     {
-        Debug.Log("OnInterstitialImpression");
-        textToShow.text = "OnInterstitialImpression";
+        Debug.Log("OnInterstitialImpression: " + obj.data);
+        textToShow.text = "OnInterstitialImpression: " + obj.data;
     }
     private void OnInterstitialFailure()
     {

@@ -8,18 +8,12 @@ public class BilUnityJS : MonoBehaviour
 {
     public static BilUnityJS Instance;
 
-    // const string BANNER_AD = "BannerAd";
-    // const string REWARDED_AD = "RewardedAd";
-    // const string INTERSTITIAL_AD = "InterstitialAd";
-
     #region BannerAd
-    private bool _isBannerLoaded = false;
     public static Action<BannerData> OnBannerImpression;
     public static Action<BannerData> OnBannerFailure;
     #endregion
 
     #region RewardedAd
-    //private bool _isRewardedReady = false;
     public static Action<RewardedData> OnUserEarnedReward; // onRewarded
     public static Action<RewardedData> OnRewardedImpression; // onShowRewardedSuccess
     public static Action<RewardedData> OnRewardedReady; // onAdReady
@@ -29,7 +23,6 @@ public class BilUnityJS : MonoBehaviour
     #endregion
 
     #region InterstitialAd
-    private bool _isInterstitialReady = false;
     public static Action<InterstitialData> OnInterstitialImpression;
     public static Action<InterstitialData> OnInterstitialReady;
     public static Action<InterstitialData> OnInterstitialClosed;
@@ -53,8 +46,9 @@ public class BilUnityJS : MonoBehaviour
     private static extern void ShowInterstitialAd();
 
     [DllImport("__Internal")]
-    // private static extern void ShowBannerAd(params object[] objects);
-    private static extern void ShowBannerAd(string elemID, string adSize);
+    private static extern void ShowBannerAd(string slotID, string adSize, string position);
+    [DllImport("__Internal")]
+    private static extern void DestroyBannerAd(string slotID);
 
     [DllImport("__Internal")]
     private static extern void OnSendEvent(string options);
@@ -84,16 +78,26 @@ public class BilUnityJS : MonoBehaviour
     }
 
     #region BannerAd
-    // params object[] objects
-    internal void ShowBanner(string elemID, string adSize)
+    internal void ShowBanner(string slotID, string adSize, string position)
     {
         try
         {
-            ShowBannerAd(elemID, adSize);
+            ShowBannerAd(slotID, adSize, position);
         }
         catch (EntryPointNotFoundException e)
         {
             Debug.LogWarning("ShowBanner failed. Make sure you are running a WebGL build in a browser:" + e.Message);
+        }
+    }
+    internal void DestroyBanner(string slotID)
+    {
+        try
+        {
+            DestroyBannerAd(slotID);
+        }
+        catch (EntryPointNotFoundException e)
+        {
+            Debug.LogWarning("DestroyBanner failed. Make sure you are running a WebGL build in a browser:" + e.Message);
         }
     }
     void BannerAdCallback(string eventJSON)
@@ -101,13 +105,11 @@ public class BilUnityJS : MonoBehaviour
         EventData<BannerData> eventData = JsonUtility.FromJson<EventData<BannerData>>(eventJSON);
         if (eventData.eventName == "onShowBannerSuccess")
         {
-            _isBannerLoaded = true;
             if (OnBannerImpression != null) OnBannerImpression(eventData.data);
             return;
         }
         if (eventData.eventName == "onShowBannerFail")
         {
-            _isBannerLoaded = false;
             if (OnBannerFailure != null) OnBannerFailure(eventData.data);
             return;
         }
@@ -214,10 +216,6 @@ public class BilUnityJS : MonoBehaviour
             Debug.LogWarning("ShowInterstitialAd failed. Make sure you are running a WebGL build in a browser:" + e.Message);
         }
     }
-    public bool IsInterstitialReady()
-    {
-        return _isInterstitialReady;
-    }
     void InterstitialAdCallback(string eventJSON)
     {
         EventData<InterstitialData> eventData = JsonUtility.FromJson<EventData<InterstitialData>>(eventJSON);
@@ -256,21 +254,21 @@ public class BilUnityJS : MonoBehaviour
     }
     void PreloadInterstitialCallback(int loaded)
     {
-        _isInterstitialReady = (loaded == 1);
+        //_isInterstitialReady = (loaded == 1);
 
-        if (OnInterstitialReady != null) OnInterstitialReady(loaded);
+        //if (OnInterstitialReady != null) OnInterstitialReady(loaded);
     }
     void InterstitialImpressionCallback()
     {
-        _isInterstitialReady = false;
+        //_isInterstitialReady = false;
 
-        if (OnInterstitialImpression != null) OnInterstitialImpression();
+        //if (OnInterstitialImpression != null) OnInterstitialImpression();
     }
     void InterstitialFailureCallback()
     {
-        _isInterstitialReady = false;
+        //_isInterstitialReady = false;
 
-        if (OnInterstitialFailure != null) OnInterstitialFailure();
+        //if (OnInterstitialLoadFail != null) OnInterstitialLoadFail();
     }
     #endregion
 
@@ -293,7 +291,6 @@ public class EventData<T>
     public T data;
     public string eventName;
 }
-
 [Serializable]
 public class RewardedData
 {
@@ -308,6 +305,126 @@ public class InterstitialData
 [Serializable]
 public class BannerData
 {
-    public string elementId;
-    public string adSize;
+    public string slotID;
+    public string data;
+}
+
+
+
+public enum AdPosition
+{
+    TOP,
+    BOTTOM
+}
+public enum BannerSize
+{
+    BANNER,
+    LARGE_BANNER,
+    MEDIUM_RECTANGLE,
+    FULL_BANNER,
+    LEADERBOARD,
+    SMART_BANNER
+}
+[Serializable]
+public class AdSize
+{
+    private int width;
+    private int height;
+
+    public AdSize(int width, int height)
+    {
+        this.width = width;
+        this.height = height;
+    }
+
+    public string GetSize()
+    {
+        return width + "x" + height;
+    }
+}
+[Serializable]
+public class BannerAd
+{
+    private string slotID;
+    private string adSize;
+    private string position;
+
+    public BannerAd(string slotID, BannerSize adSize, AdPosition position)
+    {
+        this.slotID = slotID;
+        SetAdSize(adSize);
+        SetAdPosition(position);
+    }
+
+    public BannerAd(string slotID, BannerSize adSize, int x, int y)
+    {
+        this.slotID = slotID;
+        SetAdSize(adSize);
+        position = x + "-" + y;
+    }
+
+    public BannerAd(string slotID, AdSize adSize, AdPosition position)
+    {
+        this.slotID = slotID;
+        this.adSize = adSize.GetSize();
+        SetAdPosition(position);
+    }
+
+
+    public BannerAd(string slotID, AdSize adSize, int x, int y)
+    {
+        this.slotID = slotID;
+        this.adSize = adSize.GetSize();
+        position = x + "-" + y;
+    }
+
+    private void SetAdSize(BannerSize adSize)
+    {
+        if (adSize == BannerSize.BANNER)
+        {
+            this.adSize = "320x50";
+        }
+        else if (adSize == BannerSize.LARGE_BANNER)
+        {
+            this.adSize = "320x100";
+        }
+        else if (adSize == BannerSize.MEDIUM_RECTANGLE)
+        {
+            this.adSize = "300x250";
+        }
+        else if (adSize == BannerSize.FULL_BANNER)
+        {
+            this.adSize = "468x60";
+        }
+        else if (adSize == BannerSize.LEADERBOARD)
+        {
+            this.adSize = "728x90";
+        }
+        else if (adSize == BannerSize.SMART_BANNER)
+        {
+            this.adSize = "1x1";
+        }
+    }
+
+    private void SetAdPosition(AdPosition position)
+    {
+        if (position == AdPosition.TOP)
+        {
+            this.position = "top";
+        }
+        else if (position == AdPosition.BOTTOM)
+        {
+            this.position = "bottom";
+        }
+    }
+
+    public void ShowAd()
+    {
+        BilUnityJS.Instance.ShowBanner(slotID, adSize, position);
+    }
+
+    public void Destroy()
+    {
+        BilUnityJS.Instance.DestroyBanner(slotID);
+    }
 }

@@ -88,22 +88,40 @@ mergeInto(LibraryManager.library, {
 		}
 	},
 
-	ShowBannerAd: function (elemID, adSize) {
+	ShowBannerAd: function (slotID, adSize, position) {
 		try {
 			if (
 				typeof window.BilUnityJS == "undefined" ||
-				typeof window.BilUnityJS.ShowAd == "undefined"
+				typeof window.BilUnityJS.ShowBanner == "undefined"
 			) return;
 
-			const elem = UTF8ToString(elemID);
+			const id = UTF8ToString(slotID);
 			const size = UTF8ToString(adSize);
-			window.BilUnityJS.ShowBanner(elem, size).then(function (response) {
+			const pos = UTF8ToString(position);
+			window.BilUnityJS.ShowBanner(id, size, pos).then(function (response) {
 				SendMessage("BilUnityJS", "BannerAdCallback", JSON.stringify(response));
 			}).catch(function (err) {
 				SendMessage("BilUnityJS", "BannerAdCallback", JSON.stringify(err));
 			});
 		} catch (error) {
 			console.log("ShowBannerAd: " + error);
+		}
+	},
+	DestroyBannerAd: function (slotID) {
+		try {
+			if (
+				typeof window.BilUnityJS == "undefined" ||
+				typeof window.BilUnityJS.DestroyBanner == "undefined"
+			) return;
+
+			const id = UTF8ToString(slotID);
+			window.BilUnityJS.DestroyBanner(id).then(function (response) {
+				SendMessage("BilUnityJS", "BannerAdCallback", JSON.stringify(response));
+			}).catch(function (err) {
+				SendMessage("BilUnityJS", "BannerAdCallback", JSON.stringify(err));
+			});
+		} catch (error) {
+			console.log("DestroyBannerAd: " + error);
 		}
 	},
 
