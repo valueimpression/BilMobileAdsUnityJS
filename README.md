@@ -8,27 +8,25 @@
     Tích hợp code chạy demo trong file GameManager.cs
 
 
+
 * Tích hợp Ads trong code C#:
 1. Banner: init BannerAd trước khi show banner
-    - Init: BannerAd banner = new BannerAd(slotID, adSize, position);
-        + slotID: ID unique của banner (Tự định nghĩa)
-        + adSize: kích thước banner
-            Default size dùng BannerSize (vd: BannerSize.BANNER);
-            Custom size dùng AdSize (vd: new AdSize(320, 50));
+    - Init: BannerAd banner = new BannerAd(slotID, position);
+        + slotID: ID unique của banner tạo trên ant.game
         + position: vị trí hiển thị banner
             Default AdPosition.Top or AdPosition.Bottom Custom position
     - Show: banner.ShowAd();
     - Destroy: banner.Destroy();
 
     VD:
-        BannerAd banner = new BannerAd("banner_top", BannerSize.BANNER, AdPosition.BOTTOM);
-        AdSize size = new AdSize(300, 250);
-        BannerAd banner = new BannerAd("banner_top", size, AdPosition.BOTTOM); // Custom size
-        BannerAd banner = new BannerAd("banner_top", size, 0, 50); // Custom position
+        BannerAd banner = new BannerAd("banner_top", AdPosition.BOTTOM);
+        or
+        BannerAd banner = new BannerAd("banner_top", 0, 50)
         banner.ShowBanner();
+        banner.Destroy();
 
-2. Reward: 
-    slotID: ID unique của reward (Tự định nghĩa), dùng để preload và show theo slotID
+2. Reward:
+    slotID: ID unique của reward tạo trên ant.game, dùng để preload và show theo slotID
 
     - Preload Ad trước khi show reward
         BilUnityJS.Instance.PreloadRewardedAd(slotID);

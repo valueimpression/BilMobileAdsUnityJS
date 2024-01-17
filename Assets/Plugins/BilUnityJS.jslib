@@ -134,9 +134,9 @@ mergeInto(LibraryManager.library, {
 
 			const eventN = UTF8ToString(eventData);
 			window.BilUnityJS.OnSendEvent(eventN).then(function (response) {
-				SendMessage("BilUnityJS", "BannerAdCallback", JSON.stringify(response));
+				SendMessage("BilUnityJS", "OnSendEventCallback", JSON.stringify(response));
 			}).catch(function (err) {
-				SendMessage("BilUnityJS", "BannerAdCallback", JSON.stringify(err));
+				SendMessage("BilUnityJS", "OnSendEventCallback", JSON.stringify(err));
 			});
 		} catch (error) {
 			console.log("OnSendEvent: " + error);

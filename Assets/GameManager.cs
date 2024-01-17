@@ -13,11 +13,8 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
 
-        banner = new BannerAd("banner_top", BannerSize.BANNER, AdPosition.BOTTOM);
-        //AdSize size = new AdSize(300, 250);
-        //banner = new BannerAd("banner_top", size, AdPosition.BOTTOM);
-        //banner = new BannerAd("banner_top", size, 0, 50);
-
+        banner = new BannerAd("banner_top", AdPosition.BOTTOM);
+        //banner = new BannerAd("banner_top", 0, 50);
 
         BilUnityJS.OnBannerImpression += OnBannerImpression;
         BilUnityJS.OnBannerFailure += OnBannerFailure;
@@ -37,6 +34,18 @@ public class GameManager : MonoBehaviour
             data = bannerData
         };
         BilUnityJS.Instance.SendEvent(eventData);
+
+        BilUnityJS.OnSendEventSuccess += OnSendEventSuccess;
+        BilUnityJS.OnSendEventFail += OnSendEventFail;
+    }
+
+    private void OnSendEventSuccess(CustomData obj)
+    {
+        Debug.Log("OnSendEventSuccess: " + obj.eventName + " | " + obj.data);
+    }
+    private void OnSendEventFail(CustomData obj)
+    {
+        Debug.Log("OnSendEventFail: " + obj.eventName + " | " + obj.data);
     }
 
     #region BannerAD
