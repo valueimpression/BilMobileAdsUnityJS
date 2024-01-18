@@ -30,10 +30,10 @@
 
     - Preload Ad trước khi show reward
         BilUnityJS.Instance.PreloadRewardedAd(slotID);
-            VD: BilUnityJS.Instance.PreLoadRewarded("coin");
+            VD: BilUnityJS.Instance.PreLoadRewarded(slotID);
     - Show: Bắt buộc phải preload trước khi show
         BilUnityJS.Instance.ShowRewardedAd(slotID);
-            VD: BilUnityJS.Instance.ShowRewarded("coin");
+            VD: BilUnityJS.Instance.ShowRewarded(slotID);
 
 3. Interstitial:
 
