@@ -30,6 +30,8 @@ Use AntGameAds.Instance.ShowInterstitialAd() to show an interstitial ad
 
 Use AntGameAds.Instance.ShowRewardedAd() to show an Rewarded ad
 
+#### NOTE: Use PreLoad function before calling show advertisement
+
 ## STEP 4:
 
 ---
