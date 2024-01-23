@@ -1,50 +1,115 @@
-* Các bước tích hợp Ads vào Unity
-- B1:
-    Create GameObject với tên "BilUnityJS" và Kéo file "BilUnityJS.cs" vào GameObject đó.
-    Đưa GameObject "BilUnityJS" vào trong Hierarchy.
-- B2:
-    Tạo folder "Plugins" trong Assets và copy file "BilUnityJS.jslib" vào folder đó.
-- B3: 
-    Tích hợp code chạy demo trong file GameManager.cs
+## Ant.games-SDK WebGL Unity3D
+
+---
+
+This repository contains the Ant.games SDK for WebGL Unity3D games. This allows you to display advertisements in the games published within the Ant.games network. [https://ant.games](https://ant.games)
+
+---
+
+## STEP 1:
+
+---
+
+[Download the plugin](https://drive.google.com/file/d/1eBUVgoMVhz-B_QU0JaCEkJaWqQZUm3EC/) and Import the .unitypackage into your game.
+
+Download here: [https://drive.google.com/file/d/1eBUVgoMVhz-B_QU0JaCEkJaWqQZUm3EC/](https://drive.google.com/file/d/1eBUVgoMVhz-B_QU0JaCEkJaWqQZUm3EC/)
+
+## STEP 2:
+
+---
+
+Open the Resources Folder and find the Object named **“BilUnityJS”**, then replace the Ads ID values with your own keys.
+
+![](https://33333.cdn.cke-cs.com/kSW7V9NHUXugvhoQeFaf/images/13b16ad97f0f9664b70e0d03381044a2e229881a9441b08f.png)
+
+## STEP 3:
+
+---
+
+Use AntGameAds.Instance.ShowInterstitialAd() to show an interstitial ad
+
+Use AntGameAds.Instance.ShowRewardedAd() to show an Rewarded ad
+
+## STEP 4:
+
+---
+
+Make use of the events AntGameAds.OnResumeGame and AntGameAds.OnPauseGame for resuming/pausing your game in between ads.
+
+## Example:
+
+---
+
+```plaintext
+public class ExampleClass: MonoBehaviour {
+	void Awake()
+    {
+        InitCallbacks();
+    }
+
+    public void InitCallbacks()
+    {
+        if (!AntGameAds.Instance) return;
+        AntGameAds.Instance.OnResumeGame += ResumeGame;
+        AntGameAds.Instance.OnPauseGame += PauseGame;
+    }
+
+    public void RemoveCallbacks()
+    {
+        if (!AntGameAds.Instance) return;
+        AntGameAds.Instance.OnResumeGame -= ResumeGame;
+        AntGameAds.Instance.OnPauseGame -= PauseGame;
+    }
+
+    private void OnDestroy()
+    {
+        RemoveCallbacks();
+    }
+
+	public void ResumeGame()
+    {
+        // RESUME MY GAME
+        Debug.Log("RESUME GAME");
+        AudioListener.volume = 1f;
+        Time.timeScale = 1f;
+    }
+
+    public void PauseGame()
+    {
+        // PAUSE MY GAME
+        Debug.Log("PAUSE GAME");
+        Time.timeScale = 0.01f;
+        AudioListener.volume = 0f;
+    }
 
 
+    public void PreLoadInterstitialAd()
+    {
+        if (!AntGameAds.Instance) return;
+        AntGameAds.Instance.PreloadInterstitialAd();
+    }
 
-* Tích hợp Ads trong code C#:
-1. Banner: init BannerAd trước khi show banner
-    - Init: BannerAd banner = new BannerAd(slotID, position);
-        + slotID: ID unique của banner tạo trên ant.game
-        + position: vị trí hiển thị banner
-            Default AdPosition.Top or AdPosition.Bottom Custom position
-    - Show: banner.ShowAd();
-    - Destroy: banner.Destroy();
+    public void ShowInterstitialAd()
+    {
+        if (!AntGameAds.Instance) return;
+        AntGameAds.Instance.ShowInterstitialAd();
+    }
 
-    VD:
-        BannerAd banner = new BannerAd("banner_top", AdPosition.BOTTOM);
-        or
-        BannerAd banner = new BannerAd("banner_top", 0, 50)
-        banner.ShowBanner();
-        banner.Destroy();
+    public void PreLoadRewardedAd()
+    {
+        if (!AntGameAds.Instance) return;
+        AntGameAds.Instance.PreloadRewardedAd();
+    }
 
-2. Reward:
-    slotID: ID unique của reward tạo trên ant.game, dùng để preload và show theo slotID
+    public void ShowRewardedAd()
+    {
+        if (!AntGameAds.Instance) return;
+        AntGameAds.Instance.ShowRewardedAd(OnRewardedEarned);
+    }
 
-    - Preload Ad trước khi show reward
-        BilUnityJS.Instance.PreloadRewardedAd(slotID);
-            VD: BilUnityJS.Instance.PreLoadRewarded(slotID);
-    - Show: Bắt buộc phải preload trước khi show
-        BilUnityJS.Instance.ShowRewardedAd(slotID);
-            VD: BilUnityJS.Instance.ShowRewarded(slotID);
-
-3. Interstitial:
-
-
-4. SendEvent: Gửi Custom event
-    VD:
-        BannerData bannerData = new BannerData();
-        bannerData.slotID = "banner1";
-        EventData<BannerData> eventData = new EventData<BannerData>
-        {
-            eventName = "InitBanner",
-            data = bannerData
-        };
-        BilUnityJS.Instance.SendEvent(eventData);
+    public void OnRewardedEarned()
+    {
+        Debug.Log("Rewarded Ad Completed");
+    }
+}
+```
