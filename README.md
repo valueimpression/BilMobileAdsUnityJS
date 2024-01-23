@@ -16,9 +16,9 @@ Open the Resources Folder and find the Object named **“BilUnityJS”**, then r
 
 ## STEP 3:
 
-Use AntGameAds.Instance.ShowInterstitialAd() to show an interstitial ad
+Use AntGameAds.Instance.ShowInterstitialAd() to show an Interstitial ad
 
-Use AntGameAds.Instance.ShowRewardedAd() to show an Rewarded ad
+Use AntGameAds.Instance.ShowRewardedAd() to show a Rewarded ad
 
 #### NOTE: Use PreLoad function before calling show advertisement
 
