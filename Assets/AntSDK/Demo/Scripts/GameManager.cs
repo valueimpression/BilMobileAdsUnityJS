@@ -23,6 +23,18 @@ public class GameManager : MonoBehaviour
         AntGameAds.Instance.OnPauseGame += PauseGame;
     }
 
+    public void RemoveCallbacks()
+    {
+        if (!AntGameAds.Instance) return;
+        AntGameAds.Instance.OnResumeGame -= ResumeGame;
+        AntGameAds.Instance.OnPauseGame -= PauseGame;
+    }
+
+    private void OnDestroy()
+    {
+        RemoveCallbacks();
+    }
+
     public void ResumeGame()
     {
         // RESUME MY GAME
