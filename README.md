@@ -4,9 +4,9 @@ This repository contains the Ant.games SDK for WebGL Unity3D games. This allows 
 
 ## STEP 1:
 
-[Download the plugin](https://drive.google.com/file/d/1eBUVgoMVhz-B_QU0JaCEkJaWqQZUm3EC/) and Import the .unitypackage into your game.
+[Download the plugin](https://drive.google.com/file/d/1pl_qEzWhXRsVvlVqkb5hhJKHXST4-pjf/) and Import the .unitypackage into your game.
 
-Download here: [https://drive.google.com/file/d/1eBUVgoMVhz-B_QU0JaCEkJaWqQZUm3EC/](https://drive.google.com/file/d/1eBUVgoMVhz-B_QU0JaCEkJaWqQZUm3EC/)
+Download here: [https://drive.google.com/file/d/1eBUVgoMVhz-B_QU0JaCEkJaWqQZUm3EC/](https://drive.google.com/file/d/1pl_qEzWhXRsVvlVqkb5hhJKHXST4-pjf/)
 
 ## STEP 2:
 
