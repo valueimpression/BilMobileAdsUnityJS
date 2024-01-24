@@ -6,13 +6,13 @@ This repository contains the Ant.games SDK for WebGL Unity3D games. This allows 
 
 [Download the plugin](https://drive.google.com/file/d/1pl_qEzWhXRsVvlVqkb5hhJKHXST4-pjf/) and Import the .unitypackage into your game.
 
-Download here: [https://drive.google.com/file/d/1eBUVgoMVhz-B_QU0JaCEkJaWqQZUm3EC/](https://drive.google.com/file/d/1pl_qEzWhXRsVvlVqkb5hhJKHXST4-pjf/)
+Download here: [https://drive.google.com/file/d/1pl_qEzWhXRsVvlVqkb5hhJKHXST4-pjf/](https://drive.google.com/file/d/1pl_qEzWhXRsVvlVqkb5hhJKHXST4-pjf/)
 
 ## STEP 2:
 
-Open the Resources Folder and find the Object named **“BilUnityJS”**, then replace the Ads ID values with your own keys.
+Open the Resources Folder and find the Object named **“AntGamesSDK”**, then replace the Ads ID values with your own keys.
 
-![](https://33333.cdn.cke-cs.com/kSW7V9NHUXugvhoQeFaf/images/13b16ad97f0f9664b70e0d03381044a2e229881a9441b08f.png)
+![](https://33333.cdn.cke-cs.com/kSW7V9NHUXugvhoQeFaf/images/458f9cea600cdd10de4fd168ebc004abdd7d577bbd179baf.png)
 
 ## STEP 3:
 
