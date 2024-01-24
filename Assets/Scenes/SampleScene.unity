@@ -1008,7 +1008,7 @@ GameObject:
   - component: {fileID: 608864184}
   - component: {fileID: 608864185}
   m_Layer: 0
-  m_Name: BilUnityJS
+  m_Name: AntGamesSDK
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1777,7 +1777,7 @@ GameObject:
   - component: {fileID: 1054705960}
   - component: {fileID: 1054705959}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: AdsManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
