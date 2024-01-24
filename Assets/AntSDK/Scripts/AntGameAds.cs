@@ -34,6 +34,8 @@ public class AntGameAds : Singleton<AntGameAds>
         //}
         //banner = new BannerAd("banner_top", 0, 50);
 
+        Application.targetFrameRate = 60;
+
         AdConfig();
 
         BilUnityJS.OnBannerImpression += OnBannerImpression;
