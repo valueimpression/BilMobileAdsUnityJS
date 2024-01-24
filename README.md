@@ -1,12 +1,11 @@
 * Các bước tích hợp Ads vào Unity
 - B1:
-    Create GameObject với tên "AntGamesSDK" và Kéo file "BilUnityJS.cs" vào GameObject đó.
-    Đưa GameObject "BilUnityJS" vào trong Hierarchy.
+    Create GameObject với tên "AntGamesSDK" và Kéo file "AntGamesSDK.cs" vào GameObject đó.
+    Đưa GameObject "AntGamesSDK" vào trong Hierarchy.
 - B2:
-    Tạo folder "Plugins" trong Assets và copy file "BilUnityJS.jslib" vào folder đó.
+    Tạo folder "Plugins" trong Assets và copy file "AntGamesSDK.jslib" vào folder đó.
 - B3: 
     Tích hợp code chạy demo trong file GameManager.cs
-
 
 
 * Tích hợp Ads trong code C#:
@@ -29,11 +28,11 @@
     slotID: ID unique của reward tạo trên ant.game, dùng để preload và show theo slotID
 
     - Preload Ad trước khi show reward
-        BilUnityJS.Instance.PreloadRewardedAd(slotID);
-            VD: BilUnityJS.Instance.PreLoadRewarded(slotID);
+        AntGamesSDK.Instance.PreloadRewardedAd(slotID);
+            VD: AntGamesSDK.Instance.PreLoadRewarded(slotID);
     - Show: Bắt buộc phải preload trước khi show
-        BilUnityJS.Instance.ShowRewardedAd(slotID);
-            VD: BilUnityJS.Instance.ShowRewarded(slotID);
+        AntGamesSDK.Instance.ShowRewardedAd(slotID);
+            VD: AntGamesSDK.Instance.ShowRewarded(slotID);
 
 3. Interstitial:
 
@@ -47,4 +46,4 @@
             eventName = "InitBanner",
             data = bannerData
         };
-        BilUnityJS.Instance.SendEvent(eventData);
+        AntGamesSDK.Instance.SendEvent(eventData);
