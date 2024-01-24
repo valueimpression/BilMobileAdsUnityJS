@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
 using System.Text.RegularExpressions;
-public class BilUnityJS : MonoBehaviour
+public class AntGamesSDK : MonoBehaviour
 {
-    public static BilUnityJS Instance;
+    public static AntGamesSDK Instance;
 
     #region BannerAd
     public static Action<BannerData> OnBannerImpression;
@@ -60,8 +60,8 @@ public class BilUnityJS : MonoBehaviour
 
     void Awake()
     {
-        if (BilUnityJS.Instance == null)
-            BilUnityJS.Instance = this;
+        if (AntGamesSDK.Instance == null)
+            AntGamesSDK.Instance = this;
         else
             Destroy(this);
 
@@ -359,12 +359,12 @@ public class BannerAd
 
     public void ShowAd()
     {
-        BilUnityJS.Instance.ShowBanner(slotID, position);
+        AntGamesSDK.Instance.ShowBanner(slotID, position);
     }
 
     public void Destroy()
     {
-        BilUnityJS.Instance.DestroyBanner(slotID);
+        AntGamesSDK.Instance.DestroyBanner(slotID);
     }
 }
 #endregion

@@ -16,15 +16,15 @@ public class GameManager : MonoBehaviour
         banner = new BannerAd("banner_top", AdPosition.BOTTOM);
         //banner = new BannerAd("banner_top", 0, 50);
 
-        BilUnityJS.OnBannerImpression += OnBannerImpression;
-        BilUnityJS.OnBannerFailure += OnBannerFailure;
+        AntGamesSDK.OnBannerImpression += OnBannerImpression;
+        AntGamesSDK.OnBannerFailure += OnBannerFailure;
 
-        BilUnityJS.OnRewardedReady += OnRewardedReady;
-        BilUnityJS.OnRewardedImpression += OnRewardedImpression;
-        BilUnityJS.OnUserEarnedReward += OnUserEarnedReward;
+        AntGamesSDK.OnRewardedReady += OnRewardedReady;
+        AntGamesSDK.OnRewardedImpression += OnRewardedImpression;
+        AntGamesSDK.OnUserEarnedReward += OnUserEarnedReward;
 
-        BilUnityJS.OnInterstitialReady += OnInterstitialReady;
-        BilUnityJS.OnInterstitialImpression += OnInterstitialImpression;
+        AntGamesSDK.OnInterstitialReady += OnInterstitialReady;
+        AntGamesSDK.OnInterstitialImpression += OnInterstitialImpression;
 
         BannerData bannerData = new BannerData();
         bannerData.slotID = "banner1";
@@ -33,10 +33,10 @@ public class GameManager : MonoBehaviour
             eventName = "InitBanner",
             data = bannerData
         };
-        BilUnityJS.Instance.SendEvent(eventData);
+        AntGamesSDK.Instance.SendEvent(eventData);
 
-        BilUnityJS.OnSendEventSuccess += OnSendEventSuccess;
-        BilUnityJS.OnSendEventFail += OnSendEventFail;
+        AntGamesSDK.OnSendEventSuccess += OnSendEventSuccess;
+        AntGamesSDK.OnSendEventFail += OnSendEventFail;
     }
 
     private void OnSendEventSuccess(CustomData obj)
@@ -72,23 +72,23 @@ public class GameManager : MonoBehaviour
     #region RewardedAD
     public void IsRewardedReady()
     {
-        BilUnityJS.Instance.IsRewardedReady("coin");
+        AntGamesSDK.Instance.IsRewardedReady("coin");
     }
     public void PreloadRewardedAd()
     {
-        BilUnityJS.Instance.PreLoadRewarded("coin");
+        AntGamesSDK.Instance.PreLoadRewarded("coin");
     }
     public void PreloadRewardedAd2()
     {
-        BilUnityJS.Instance.PreLoadRewarded("play");
+        AntGamesSDK.Instance.PreLoadRewarded("play");
     }
     public void ShowRewardedAd()
     {
-        BilUnityJS.Instance.ShowRewarded("coin");
+        AntGamesSDK.Instance.ShowRewarded("coin");
     }
     public void ShowRewardedAd2()
     {
-        BilUnityJS.Instance.ShowRewarded("play");
+        AntGamesSDK.Instance.ShowRewarded("play");
     }
 
     private void OnUserEarnedReward(RewardedData obj)
@@ -122,11 +122,11 @@ public class GameManager : MonoBehaviour
     }
     public void PreloadInterstitialAd()
     {
-        BilUnityJS.Instance.PreLoadInterstitial();
+        AntGamesSDK.Instance.PreLoadInterstitial();
     }
     public void ShowInterstitialAd()
     {
-        BilUnityJS.Instance.ShowInterstitial();
+        AntGamesSDK.Instance.ShowInterstitial();
     }
 
     private void OnInterstitialReady(InterstitialData obj)
