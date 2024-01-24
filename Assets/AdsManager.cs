@@ -125,14 +125,16 @@ public class AdsManager : MonoBehaviour
     #region InterstitialAD
     public void IsInterstitialReady()
     {
-        Debug.Log("Interstitial Loaded: ");
+        Debug.Log("Interstitial Loaded");
     }
     public void PreloadInterstitialAd()
     {
+        Debug.Log("PreloadInterstitialAd");
         AntGamesSDK.Instance.PreLoadInterstitial();
     }
     public void ShowInterstitialAd()
     {
+        Debug.Log("ShowInterstitialAd");
         AntGamesSDK.Instance.ShowInterstitial();
     }
 
