@@ -6,15 +6,15 @@ mergeInto(LibraryManager.library, {
 	PreLoadRewardedAd: function (rewardedType) {
 		try {
 			if (
-				typeof window.BilUnityJS == "undefined" ||
-				typeof window.BilUnityJS.PreLoadRewardedAd == "undefined"
+				typeof window.AntGamesSDK == "undefined" ||
+				typeof window.AntGamesSDK.PreLoadRewardedAd == "undefined"
 			) return;
 
 			const type = UTF8ToString(rewardedType);
-			window.BilUnityJS.PreLoadRewardedAd(type).then(function (response) {
-				SendMessage("BilUnityJS", "RewardedAdCallback", JSON.stringify(response));
+			window.AntGamesSDK.PreLoadRewardedAd(type).then(function (response) {
+				SendMessage("AntGamesSDK", "RewardedAdCallback", JSON.stringify(response));
 			}).catch(function (err) {
-				SendMessage("BilUnityJS", "RewardedAdCallback", JSON.stringify(err));
+				SendMessage("AntGamesSDK", "RewardedAdCallback", JSON.stringify(err));
 			});
 		} catch (error) {
 			console.log("PreLoadRewardedAd: " + error);
@@ -23,15 +23,15 @@ mergeInto(LibraryManager.library, {
 	ShowRewardedAd: function (rewardedType) {
 		try {
 			if (
-				typeof window.BilUnityJS == "undefined" ||
-				typeof window.BilUnityJS.ShowRewardedAd == "undefined"
+				typeof window.AntGamesSDK == "undefined" ||
+				typeof window.AntGamesSDK.ShowRewardedAd == "undefined"
 			) return;
 
 			const type = UTF8ToString(rewardedType);
-			window.BilUnityJS.ShowRewardedAd(type).then(function (response) {
-				SendMessage("BilUnityJS", "RewardedAdCallback", JSON.stringify(response));
+			window.AntGamesSDK.ShowRewardedAd(type).then(function (response) {
+				SendMessage("AntGamesSDK", "RewardedAdCallback", JSON.stringify(response));
 			}).catch(function (err) {
-				SendMessage("BilUnityJS", "RewardedAdCallback", JSON.stringify(err));
+				SendMessage("AntGamesSDK", "RewardedAdCallback", JSON.stringify(err));
 			});
 		} catch (error) {
 			console.log("PreLoadRewardedAd: " + error);
@@ -40,15 +40,15 @@ mergeInto(LibraryManager.library, {
 	IsRewardedAdReady: function (rewardedType) {
 		try {
 			if (
-				typeof window.BilUnityJS == "undefined" ||
-				typeof window.BilUnityJS.IsRewardedAdReady == "undefined"
+				typeof window.AntGamesSDK == "undefined" ||
+				typeof window.AntGamesSDK.IsRewardedAdReady == "undefined"
 			) return;
 
 			const type = UTF8ToString(rewardedType);
-			window.BilUnityJS.IsRewardedAdReady(type).then(function (response) {
-				SendMessage("BilUnityJS", "RewardedAdCallback", JSON.stringify(response));
+			window.AntGamesSDK.IsRewardedAdReady(type).then(function (response) {
+				SendMessage("AntGamesSDK", "RewardedAdCallback", JSON.stringify(response));
 			}).catch(function (err) {
-				SendMessage("BilUnityJS", "RewardedAdCallback", JSON.stringify(err));
+				SendMessage("AntGamesSDK", "RewardedAdCallback", JSON.stringify(err));
 			});
 		} catch (error) {
 			console.log("PreLoadRewardedAd: " + error);
@@ -58,14 +58,14 @@ mergeInto(LibraryManager.library, {
 	PreLoadInterstitialAd: function () {
 		try {
 			if (
-				typeof window.BilUnityJS == "undefined" ||
-				typeof window.BilUnityJS.PreLoadInterstitialAd == "undefined"
+				typeof window.AntGamesSDK == "undefined" ||
+				typeof window.AntGamesSDK.PreLoadInterstitialAd == "undefined"
 			) return;
 
-			window.BilUnityJS.PreLoadInterstitialAd().then(function (response) {
-				SendMessage("BilUnityJS", "InterstitialAdCallback", JSON.stringify(response));
+			window.AntGamesSDK.PreLoadInterstitialAd().then(function (response) {
+				SendMessage("AntGamesSDK", "InterstitialAdCallback", JSON.stringify(response));
 			}).catch(function (err) {
-				SendMessage("BilUnityJS", "InterstitialAdCallback", JSON.stringify(err));
+				SendMessage("AntGamesSDK", "InterstitialAdCallback", JSON.stringify(err));
 			});
 		} catch (error) {
 			console.log("PreLoadInterstitialAd: " + error);
@@ -74,14 +74,14 @@ mergeInto(LibraryManager.library, {
 	ShowInterstitialAd: function () {
 		try {
 			if (
-				typeof window.BilUnityJS == "undefined" ||
-				typeof window.BilUnityJS.ShowInterstitialAd == "undefined"
+				typeof window.AntGamesSDK == "undefined" ||
+				typeof window.AntGamesSDK.ShowInterstitialAd == "undefined"
 			) return;
 
-			window.BilUnityJS.ShowInterstitialAd().then(function (response) {
-				SendMessage("BilUnityJS", "InterstitialAdCallback", JSON.stringify(response));
+			window.AntGamesSDK.ShowInterstitialAd().then(function (response) {
+				SendMessage("AntGamesSDK", "InterstitialAdCallback", JSON.stringify(response));
 			}).catch(function (err) {
-				SendMessage("BilUnityJS", "InterstitialAdCallback", JSON.stringify(err));
+				SendMessage("AntGamesSDK", "InterstitialAdCallback", JSON.stringify(err));
 			});
 		} catch (error) {
 			console.log("ShowInterstitialAd: " + error);
@@ -91,17 +91,17 @@ mergeInto(LibraryManager.library, {
 	ShowBannerAd: function (slotID, adSize, position) {
 		try {
 			if (
-				typeof window.BilUnityJS == "undefined" ||
-				typeof window.BilUnityJS.ShowBanner == "undefined"
+				typeof window.AntGamesSDK == "undefined" ||
+				typeof window.AntGamesSDK.ShowBanner == "undefined"
 			) return;
 
 			const id = UTF8ToString(slotID);
 			const size = UTF8ToString(adSize);
 			const pos = UTF8ToString(position);
-			window.BilUnityJS.ShowBanner(id, size, pos).then(function (response) {
-				SendMessage("BilUnityJS", "BannerAdCallback", JSON.stringify(response));
+			window.AntGamesSDK.ShowBanner(id, size, pos).then(function (response) {
+				SendMessage("AntGamesSDK", "BannerAdCallback", JSON.stringify(response));
 			}).catch(function (err) {
-				SendMessage("BilUnityJS", "BannerAdCallback", JSON.stringify(err));
+				SendMessage("AntGamesSDK", "BannerAdCallback", JSON.stringify(err));
 			});
 		} catch (error) {
 			console.log("ShowBannerAd: " + error);
@@ -110,15 +110,15 @@ mergeInto(LibraryManager.library, {
 	DestroyBannerAd: function (slotID) {
 		try {
 			if (
-				typeof window.BilUnityJS == "undefined" ||
-				typeof window.BilUnityJS.DestroyBanner == "undefined"
+				typeof window.AntGamesSDK == "undefined" ||
+				typeof window.AntGamesSDK.DestroyBanner == "undefined"
 			) return;
 
 			const id = UTF8ToString(slotID);
-			window.BilUnityJS.DestroyBanner(id).then(function (response) {
-				SendMessage("BilUnityJS", "BannerAdCallback", JSON.stringify(response));
+			window.AntGamesSDK.DestroyBanner(id).then(function (response) {
+				SendMessage("AntGamesSDK", "BannerAdCallback", JSON.stringify(response));
 			}).catch(function (err) {
-				SendMessage("BilUnityJS", "BannerAdCallback", JSON.stringify(err));
+				SendMessage("AntGamesSDK", "BannerAdCallback", JSON.stringify(err));
 			});
 		} catch (error) {
 			console.log("DestroyBannerAd: " + error);
@@ -128,15 +128,15 @@ mergeInto(LibraryManager.library, {
 	OnSendEvent: function (eventData) {
 		try {
 			if (
-				typeof window.BilUnityJS == "undefined" ||
-				typeof window.BilUnityJS.OnSendEvent == "undefined"
+				typeof window.AntGamesSDK == "undefined" ||
+				typeof window.AntGamesSDK.OnSendEvent == "undefined"
 			) return;
 
 			const eventN = UTF8ToString(eventData);
-			window.BilUnityJS.OnSendEvent(eventN).then(function (response) {
-				SendMessage("BilUnityJS", "OnSendEventCallback", JSON.stringify(response));
+			window.AntGamesSDK.OnSendEvent(eventN).then(function (response) {
+				SendMessage("AntGamesSDK", "OnSendEventCallback", JSON.stringify(response));
 			}).catch(function (err) {
-				SendMessage("BilUnityJS", "OnSendEventCallback", JSON.stringify(err));
+				SendMessage("AntGamesSDK", "OnSendEventCallback", JSON.stringify(err));
 			});
 		} catch (error) {
 			console.log("OnSendEvent: " + error);

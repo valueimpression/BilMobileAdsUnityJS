@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using UnityEngine.UI;
 
-public class GameManager : MonoBehaviour
+public class AdsManager : MonoBehaviour
 {
 
     public Text textToShow;
@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
+        Debug.Log("AdsManager Awake");
 
         banner = new BannerAd("banner_top", AdPosition.BOTTOM);
         //banner = new BannerAd("banner_top", 0, 50);
@@ -51,6 +52,7 @@ public class GameManager : MonoBehaviour
     #region BannerAD
     public void ShowBannerAd()
     {
+        Debug.Log("Show Banner: banner_top");
         if (banner != null) banner.ShowAd();
     }
     public void DestroyBannerAd()
@@ -72,22 +74,27 @@ public class GameManager : MonoBehaviour
     #region RewardedAD
     public void IsRewardedReady()
     {
+        Debug.Log("IsRewardedReady: coin");
         AntGamesSDK.Instance.IsRewardedReady("coin");
     }
     public void PreloadRewardedAd()
     {
+        Debug.Log("PreloadRewardedAd: coin");
         AntGamesSDK.Instance.PreLoadRewarded("coin");
     }
     public void PreloadRewardedAd2()
     {
+        Debug.Log("PreloadRewardedAd: play");
         AntGamesSDK.Instance.PreLoadRewarded("play");
     }
     public void ShowRewardedAd()
     {
+        Debug.Log("ShowRewardedAd: coin");
         AntGamesSDK.Instance.ShowRewarded("coin");
     }
     public void ShowRewardedAd2()
     {
+        Debug.Log("ShowRewardedAd2: play");
         AntGamesSDK.Instance.ShowRewarded("play");
     }
 
