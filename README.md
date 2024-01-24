@@ -1,7 +1,6 @@
 * Các bước tích hợp Ads vào Unity
 - B1:
-    Create GameObject với tên "AntGamesSDK" và Kéo file "AntGamesSDK.cs" vào GameObject đó.
-    Đưa GameObject "AntGamesSDK" vào trong Hierarchy.
+    Kéo AntGamesSDK.prefab vào trong Hierarchy.
 - B2:
     Tạo folder "Plugins" trong Assets và copy file "AntGamesSDK.jslib" vào folder đó.
 - B3: 
