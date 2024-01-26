@@ -10,6 +10,7 @@ public class AntGameAds : Singleton<AntGameAds>
     private Action _rewardSuccessCallback;
     private Action _rewardFailCallback;
 
+    public bool isShowDefaultBottomBanner;
 
     public Action OnResumeGame;
     public Action OnPauseGame;
@@ -75,7 +76,7 @@ public class AntGameAds : Singleton<AntGameAds>
 
         PreloadRewardedAd();
         PreloadInterstitialAd();
-        ShowBannerAd();
+        if(isShowDefaultBottomBanner) ShowBannerAd();
     }
 
     private void OnSendEventSuccess(CustomData obj)
