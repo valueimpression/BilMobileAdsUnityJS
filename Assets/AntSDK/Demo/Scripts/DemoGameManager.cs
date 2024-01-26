@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace AntGamesSDK.Demo
+namespace AntGames.Demo
 {
     public class DemoGameManager : Singleton<DemoGameManager>
     {
@@ -15,6 +15,7 @@ namespace AntGamesSDK.Demo
 
         void Awake()
         {
+            base.Awake();
             InitCallbacks();
         }
 
