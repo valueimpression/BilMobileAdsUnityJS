@@ -44,10 +44,12 @@ public class AntGameAds : Singleton<AntGameAds>
         AntGamesSDK.OnRewardedImpression += OnRewardedImpression;
         AntGamesSDK.OnUserEarnedReward += OnUserEarnedReward;
         AntGamesSDK.OnRewardedClosed += OnRewardClosed;
+        AntGamesSDK.OnRewardedShowFail += OnRewardedFailure;
 
         AntGamesSDK.OnInterstitialReady += OnInterstitialReady;
         AntGamesSDK.OnInterstitialImpression += OnInterstitialImpression;
         AntGamesSDK.OnInterstitialClosed += OnInterstitialClosed;
+        AntGamesSDK.OnInterstitialShowFail += OnInterstitialFailure;
 
         AntGamesSDK.OnSendEventSuccess += OnSendEventSuccess;
         AntGamesSDK.OnSendEventFail += OnSendEventFail;
@@ -143,7 +145,7 @@ public class AntGameAds : Singleton<AntGameAds>
     private void OnUserEarnedReward(RewardedData obj)
     {
         _rewardSuccessCallback?.Invoke();
-        if (OnResumeGame != null) OnResumeGame();
+        //if (OnResumeGame != null) OnResumeGame();
         Debug.Log("OnUserEarnedReward: " + obj.rewardedType);
         Debug.Log(obj.data);
         //textToShow.text = "OnUserEarnedReward: " + obj.rewardedType;
@@ -160,8 +162,11 @@ public class AntGameAds : Singleton<AntGameAds>
         Debug.Log("OnRewardedImpression: " + obj.rewardedType);
         //textToShow.text = "OnRewardedImpression: " + obj.rewardedType;
     }
-    private void OnRewardedFailure()
+    private void OnRewardedFailure(RewardedData data)
     {
+        _rewardSuccessCallback = null;
+        _rewardFailCallback = null;
+        if (OnResumeGame != null) OnResumeGame.Invoke();
         Debug.Log("OnRewardedFailure");
         //textToShow.text = "OnRewardedFailure";
     }
@@ -169,6 +174,8 @@ public class AntGameAds : Singleton<AntGameAds>
     void OnRewardClosed(RewardedData obj)
     {
         StartCoroutine(PreloadRewardCoroutine());
+        _rewardSuccessCallback = null;
+        _rewardFailCallback = null;
         if (OnResumeGame != null) OnResumeGame();
     }
 
@@ -205,7 +212,7 @@ public class AntGameAds : Singleton<AntGameAds>
         Debug.Log("OnInterstitialImpression: " + obj.data);
         //textToShow.text = "OnInterstitialImpression: " + obj.data;
     }
-    private void OnInterstitialFailure()
+    private void OnInterstitialFailure(InterstitialData data)
     {
         Debug.Log("OnInterstitialFailure");
         if (OnResumeGame != null) OnResumeGame();

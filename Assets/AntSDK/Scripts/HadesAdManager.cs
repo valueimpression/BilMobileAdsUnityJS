@@ -11,9 +11,9 @@ public class HadesAdManager : Singleton<HadesAdManager>
     public Button btnShowRewardedAd;
     public Button btnShowBannerAd;
 
-    public Action OnRewardEarned;
+    //public Action OnRewardEarned;
 
-    void Awake()
+    public override void Awake()
     {
         base.Awake();
         InitCallbacks();
@@ -61,17 +61,22 @@ public class HadesAdManager : Singleton<HadesAdManager>
         AntGameAds.Instance.PreloadRewardedAd();
     }
 
-    public void ShowRewardedAd()
+    public void ShowRewardedAd(Action successCallback)
     {
         if (!AntGameAds.Instance) return;
-        AntGameAds.Instance.ShowRewardedAd(OnRewardedEarned);
+        AntGameAds.Instance.ShowRewardedAd(successCallback);
     }
 
-    public void OnRewardedEarned()
+    // public void OnRewardedEarned()
+    // {
+    //     Debug.Log("Rewarded Ad Completed");
+    //     if (OnRewardEarned != null) OnRewardedEarned();
+    //     PreLoadRewardedAd();
+    // }
+    
+    public void ShowBanner()
     {
-        Debug.Log("Rewarded Ad Completed");
-        if (OnRewardEarned != null) OnRewardedEarned();
-        PreLoadRewardedAd();
+        AntGameAds.Instance.ShowBannerAd();
     }
 }
 
