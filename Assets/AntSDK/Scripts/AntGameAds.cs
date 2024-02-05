@@ -19,7 +19,7 @@ public class AntGameAds : Singleton<AntGameAds>
     public string bannerAdID;
     public string interstitialAdID;
 
-
+    public bool isRewardReady = false;
     public override void Awake()
     {
         base.Awake();
@@ -145,6 +145,7 @@ public class AntGameAds : Singleton<AntGameAds>
     private void OnUserEarnedReward(RewardedData obj)
     {
         _rewardSuccessCallback?.Invoke();
+        _rewardSuccessCallback = null;
         //if (OnResumeGame != null) OnResumeGame();
         Debug.Log("OnUserEarnedReward: " + obj.rewardedType);
         Debug.Log(obj.data);
@@ -155,6 +156,7 @@ public class AntGameAds : Singleton<AntGameAds>
         string mess = "OnRewardedReady: " + obj.rewardedType + " | " + obj.data;
         Debug.Log(mess);
         //textToShow.text = "OnRewardedReady: " + mess;
+        isRewardReady = true;
     }
     private void OnRewardedImpression(RewardedData obj)
     {
@@ -165,9 +167,11 @@ public class AntGameAds : Singleton<AntGameAds>
     private void OnRewardedFailure(RewardedData data)
     {
         _rewardSuccessCallback = null;
+        _rewardFailCallback?.Invoke();
         _rewardFailCallback = null;
         if (OnResumeGame != null) OnResumeGame.Invoke();
         Debug.Log("OnRewardedFailure");
+        isRewardReady = false;
         //textToShow.text = "OnRewardedFailure";
     }
 

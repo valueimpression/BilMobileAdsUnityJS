@@ -67,16 +67,16 @@ public class HadesAdManager : Singleton<HadesAdManager>
         AntGameAds.Instance.ShowRewardedAd(successCallback);
     }
 
-    // public void OnRewardedEarned()
-    // {
-    //     Debug.Log("Rewarded Ad Completed");
-    //     if (OnRewardEarned != null) OnRewardedEarned();
-    //     PreLoadRewardedAd();
-    // }
-    
+    public bool IsRewardedReady()
+    {
+        return AntGameAds.Instance.isRewardReady;
+    }
+
     public void ShowBanner()
     {
         AntGameAds.Instance.ShowBannerAd();
     }
+
+    
 }
 
