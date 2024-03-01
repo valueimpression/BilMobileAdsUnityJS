@@ -6,11 +6,6 @@ using UnityEngine.UI;
 
 public class HadesAdManager : Singleton<HadesAdManager>
 {
-
-    public Button btnShowInterAd;
-    public Button btnShowRewardedAd;
-    public Button btnShowBannerAd;
-
     //public Action OnRewardEarned;
 
     public override void Awake()
@@ -69,7 +64,7 @@ public class HadesAdManager : Singleton<HadesAdManager>
 
     public bool IsRewardedReady()
     {
-        return AntGameAds.Instance.isRewardReady;
+        return AntGameAds.Instance.IsRewardedReady();
     }
 
     public void ShowBanner()

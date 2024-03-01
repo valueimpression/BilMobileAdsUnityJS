@@ -19,21 +19,14 @@ public class AntGameAds : Singleton<AntGameAds>
     public string bannerAdID;
     public string interstitialAdID;
 
-    public bool isRewardReady = false;
+    public string ratingURL;
+
+    private bool _isRewardReady = false;
+    private bool _isIntersAdReady = false;
+    
     public override void Awake()
     {
         base.Awake();
-        //if (Application.isMobilePlatform)
-        //{
-        //    banner = new BannerAd(mobileBannerID, AdPosition.BOTTOM);
-        //    Debug.Log("Load Banner Mobile");
-        //}
-        //else
-        //{
-        //    banner = new BannerAd(pcBannerID, AdPosition.BOTTOM);
-        //    Debug.Log("Load Banner Desktop");
-        //}
-        //banner = new BannerAd("banner_top", 0, 50);
 
         AdConfig();
 
@@ -45,6 +38,7 @@ public class AntGameAds : Singleton<AntGameAds>
         AntGamesSDK.OnUserEarnedReward += OnUserEarnedReward;
         AntGamesSDK.OnRewardedClosed += OnRewardClosed;
         AntGamesSDK.OnRewardedShowFail += OnRewardedFailure;
+        AntGamesSDK.OnRewardedLoadFail += OnRewardedLoadFail;
 
         AntGamesSDK.OnInterstitialReady += OnInterstitialReady;
         AntGamesSDK.OnInterstitialImpression += OnInterstitialImpression;
@@ -57,6 +51,8 @@ public class AntGameAds : Singleton<AntGameAds>
         LoadBannerAds();
 
     }
+
+    
 
     private void AdConfig()
     {
@@ -125,9 +121,9 @@ public class AntGameAds : Singleton<AntGameAds>
     #endregion
 
     #region RewardedAD
-    public void IsRewardedReady()
+    public bool IsRewardedReady()
     {
-        AntGamesSDK.Instance.IsRewardedReady("coin");
+        return _isRewardReady;
     }
     public void PreloadRewardedAd()
     {
@@ -137,6 +133,11 @@ public class AntGameAds : Singleton<AntGameAds>
     
     public void ShowRewardedAd(Action successCallback, Action failCallback = null)
     {
+        if (!_isRewardReady)
+        {
+            Debug.Log("RewardedAd Show Failed! Error: No Ad!!!");
+            return;
+        }
         _rewardSuccessCallback = successCallback;
         _rewardFailCallback = failCallback;
         AntGamesSDK.Instance.ShowRewarded(rewardAdID);
@@ -156,7 +157,7 @@ public class AntGameAds : Singleton<AntGameAds>
         string mess = "OnRewardedReady: " + obj.rewardedType + " | " + obj.data;
         Debug.Log(mess);
         //textToShow.text = "OnRewardedReady: " + mess;
-        isRewardReady = true;
+        _isRewardReady = true;
     }
     private void OnRewardedImpression(RewardedData obj)
     {
@@ -169,10 +170,17 @@ public class AntGameAds : Singleton<AntGameAds>
         _rewardSuccessCallback = null;
         _rewardFailCallback?.Invoke();
         _rewardFailCallback = null;
-        if (OnResumeGame != null) OnResumeGame.Invoke();
+        if (OnResumeGame != null) OnResumeGame();
         Debug.Log("OnRewardedFailure");
-        isRewardReady = false;
+        _isRewardReady = false;
         //textToShow.text = "OnRewardedFailure";
+    }
+
+    private void OnRewardedLoadFail(RewardedData obj)
+    {
+        string mess = "OnRewardedLoadFail: " + obj.rewardedType + " | " + obj.data;
+        Debug.Log(mess);
+        _isRewardReady = false;
     }
 
     void OnRewardClosed(RewardedData obj)
@@ -195,9 +203,12 @@ public class AntGameAds : Singleton<AntGameAds>
     public void IsInterstitialReady()
     {
         Debug.Log("Interstitial Loaded: ");
+        _isIntersAdReady = true;
     }
     public void PreloadInterstitialAd()
     {
+        Debug.Log("PreloadInterstitialAd: ");
+        _isIntersAdReady = false;
         AntGamesSDK.Instance.PreLoadInterstitial();
     }
     public void ShowInterstitialAd()
@@ -207,6 +218,7 @@ public class AntGameAds : Singleton<AntGameAds>
 
     private void OnInterstitialReady(InterstitialData obj)
     {
+        _isIntersAdReady = true;
         Debug.Log("OnInterstitialReady: " + obj.data);
         //textToShow.text = "OnInterstitialReady: " + obj.data;
     }
@@ -218,6 +230,7 @@ public class AntGameAds : Singleton<AntGameAds>
     }
     private void OnInterstitialFailure(InterstitialData data)
     {
+        _isIntersAdReady = false;
         Debug.Log("OnInterstitialFailure");
         if (OnResumeGame != null) OnResumeGame();
         //textToShow.text = "OnInterstitialFailure";
@@ -225,6 +238,7 @@ public class AntGameAds : Singleton<AntGameAds>
 
     private void OnInterstitialClosed(InterstitialData obj)
     {
+        _isIntersAdReady = false;
         Debug.Log("Interstitial Ad Closed");
         if (OnResumeGame != null) OnResumeGame();
     }
